@@ -6,5 +6,5 @@
 
 ## Autores
 
-[Alessandro Lima de Miranda](https://github.com/Alessandro-Miranda)
-[Luan Thomaz Abrantes Martinez](https://github.com/Thomazl)
+[Alessandro Lima de Miranda](https://github.com/Alessandro-Miranda) - Desenvolvimento Back-end
+[Luan Thomaz Abrantes Martinez](https://github.com/Thomazl) - Layout e Desenvolvimento Front-end 
