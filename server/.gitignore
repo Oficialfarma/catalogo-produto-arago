@@ -1,0 +1,19 @@
+# local env files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Composer
+vendor/
+
+# log files
+*.log
+
+# sku, ean and others files used to make a requests
+*.txt
+*.txt
+
+# cache files
+cache
