@@ -121,7 +121,17 @@ class DownloadProducts implements IDownloadProducts
             array_walk($value['Product'], function($value, $key) use (&$actualProduct, $keys, $internalLoopKeys) {
                 if(in_array($key, $keys))
                 {
-                    $actualProduct[$key] = $value;
+                    if($key === 'price' || $key === 'promotional_price')
+                    {
+                        $specialKey = ($key === 'price') ? 'price_not_formated' : 'promotional_price_not_formated';
+                        $actualProduct[$key] = $value;
+                        $actualProduct[$specialKey] = intval(str_replace('.', '', $value));
+                        
+                    }
+                    else
+                    {
+                        $actualProduct[$key] = $value;
+                    }
                 }
 
                 if(in_array($key, $internalLoopKeys))
@@ -138,10 +148,10 @@ class DownloadProducts implements IDownloadProducts
                     }
                 }
             });
-
+             
             array_push($productInfos, $actualProduct);
         }
-
+        
         return $productInfos;
     }
 
