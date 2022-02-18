@@ -104,7 +104,7 @@ class ProductController
             {
                 continue;
             }
-
+            
             $this->filters[$key] = $value;
         }
     }
