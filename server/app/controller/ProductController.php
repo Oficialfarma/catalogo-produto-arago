@@ -85,7 +85,7 @@ class ProductController
     public function explodeQuery(string $query): void
     {
         parse_str($query, $exploadedQuery);
-        $paramsAllowed = array("name", "promotional_price", "id", "price");
+        $paramsAllowed = array("name", "discount", "id", "price");
         
         foreach($exploadedQuery as $key => $value)
         {
