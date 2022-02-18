@@ -223,7 +223,7 @@ class Database implements IDatabaseRepository
             {
                 // Se o filtro for por valor, será repassado do controller separado por espaço em branco. Ex: bestPrice=50+26 será repassado como '50 26'
                 $value1 = explode(" ", $value)[0];
-                $value2 = explode(" ", $value)[1];
+                $value2 = explode(" ", $value)[1] ?? $value1;
                 $keyValue = ($key === 'price') ? 'price_not_formated' : 'promotional_price_not_formated';
 
                 array_push(
