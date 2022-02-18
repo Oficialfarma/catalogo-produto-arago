@@ -28,20 +28,16 @@ Também será necessário criar as variáveis de ambiente para inicialização d
 
 ### Server
 
-Inicie o servidor PHP seguindo os passos do servidor utilizado ou, caso utilize o servidor embutido do PHP, basta rodar, no terminal, o comando abaixo para que seja iniciado o servidor.
-
-composer server
+Inicie o servidor PHP seguindo os passos do servidor utilizado ou, caso utilize o servidor embutido do PHP, basta rodar, no terminal, o comando `composer server` para que seja iniciado o servidor.
 
 Com o servidor iniciado já será possível acessar os produtos disponíveis na base através da rota /products. Os parâmetros permitidos pela rota são:
 
 - limit - Limite de itens retornados em cada página
 - page - página de exibição de produtos
-- productName - nome do produto que está sendo buscado
-- discountTag - Faixa de desconto solicitada (Aceita apenas um valor de desconto)
-- productCategories - As categorias de produtos (Aceita mais de uma categoria separada pelo sinal de adição(+))
-- productID - Id do produto buscado
-- sku - Sku do produto buscado
-- bestPrice - Faixa de preço do produto (Aceita dois valores separados pelo sinal de adição(+)). Obs.: O valor não deve possuir vírgulas ou pontos. Ex.: R$ 30,25 deve ser passado como 3025
+- name - nome do produto que está sendo buscado
+- discount - Faixa de desconto solicitada (Aceita mais de um valor separado pelo sinal de mais(+))
+- id - Id do produto buscado
+- price - Faixa de preço do produto (Aceita dois valores separados pelo sinal de adição(+)). Obs.: O valor não deve ser passado como um número inteiro sem possuir vírgulas ou pontos. Ex.: R$ 30,25 deve ser passado como 3025
 
 ## Produtos
 
