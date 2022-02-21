@@ -38,6 +38,6 @@ interface IProductGateway
      * @param array $filters
      * @return float
      */
-    public function totalPages($limit, $filters): float;
+    public function totalPages(int $limit, array $filters): float;
 
 }
