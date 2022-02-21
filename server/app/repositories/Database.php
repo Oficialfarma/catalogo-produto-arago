@@ -232,7 +232,9 @@ class Database implements IDatabaseRepository
             $campaignId = $this->getCampaignId();
             $whereFilters = $this->performWhereFilters($filters);
             
-            $stmt = $this->PDO->prepare("SELECT COUNT(*) FROM product LEFT JOIN product_campaign ON product.id = product_campaign.product_id WHERE product_campaign.campaign_id = {$campaignId} AND {$whereFilters}");
+            $where = !empty($filters) ? "product_campaign.campaign_id = {$campaignId} AND {$whereFilters}" : "product_campaign.campaign_id = {$campaignId}";
+
+            $stmt = $this->PDO->prepare("SELECT COUNT(*) FROM product LEFT JOIN product_campaign ON product.id = product_campaign.product_id WHERE {$where}");
         }
         else
         {
