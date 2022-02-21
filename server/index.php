@@ -22,7 +22,11 @@ if(!$hasProductPath)
     exit();
 }
 
-$productController = new ProductController();
+$urlPath = explode('/', $uri);
+array_shift($urlPath);
+$productCampaign = $urlPath[1] ?? null;
+
+$productController = new ProductController($productCampaign);
 
 if(isset($_SERVER['QUERY_STRING']))
 {
@@ -31,5 +35,5 @@ if(isset($_SERVER['QUERY_STRING']))
 }
 else
 {
-    $productController->getAllProducts();
+    $productController->getAllProducts($productCampaign);
 }
