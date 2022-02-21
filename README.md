@@ -66,6 +66,7 @@ obs: Por padrão o limite de produtos retornados é 10 e o máximo é 100 e a p�
 Alguns exemplos de filtro e busca de produtos:
 
 - /products : Retorna todos os produtos, retornando a primeira página limitando em 10 produtos
+- /products/?:camapnha : Retorna os produtos de determinada campanha
 - /products?name=some%20%product : Retorna os produtos que contenham o nome passado
 - /products?discount=40000 : Retorna os produtos com faixa de desconto entre os valores solicitados
 - /products?productCategories=Emagrecimento+beleza+saude = Retorna os produtos que pertençam à categoria passada
@@ -75,7 +76,7 @@ Os parâmetros limit e page pode ser enviado em conjunto com qualquer um dos out
 
 ### Exemplo de resposta
 
-Ao solicitar a url /products?products?price=1+15900&limit=2, o retorno será como o exemplo a seguir
+Ao solicitar a url /products/teste?products?price=1+15900&limit=2, o retorno será como o exemplo a seguir
 
 ```json
 {
