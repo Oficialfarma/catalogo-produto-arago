@@ -12,14 +12,16 @@ class Database implements IDatabaseRepository
 {
     public $PDO;
     private $tablename;
+    private $campaign;
     
-    public function __construct()
+    public function __construct(string|null $campaign)
     {
         $host = $_ENV['HOST'];
         $database = $_ENV['DATABASE'];
         $username = $_ENV['USERNAME'];
         $password = $_ENV['PASSWORD'];
         $this->tablename = $_ENV['TABLENAME'];
+        $this->campaign = $campaign;
         
         try
         {
@@ -54,12 +56,27 @@ class Database implements IDatabaseRepository
      * @param int $limit
      * @return array|false
      */
-    public function findAllProducts($actualPageLimitInit, $limit): array|false
+    public function findAllProducts(int $actualPageLimitInit, int $limit): array|false
     {
-        $stmt = $this->PDO->prepare("SELECT * FROM {$this->tablename} LIMIT {$actualPageLimitInit},{$limit}");
-        $stmt->execute();
+        $result = false;
 
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if(is_null($this->campaign))
+        {
+            $stmt = $this->PDO->prepare("SELECT * FROM {$this->tablename} LIMIT {$actualPageLimitInit},{$limit}");
+            $stmt->execute();
+    
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+        else
+        {
+            
+            $campaignId = $this->getCampaignId();
+            
+            $stmt = $this->PDO->prepare("SELECT * FROM product LEFT JOIN product_campaign ON product.id = product_campaign.product_id WHERE product_campaign.campaign_id = {$campaignId} LIMIT {$actualPageLimitInit},{$limit}");
+            $stmt->execute();
+    
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
 
         return $result;
     }
@@ -72,7 +89,7 @@ class Database implements IDatabaseRepository
      * @param int   $limit
      * @return array|false
      */
-    public function filterProducts($filter, $actualPageLimitInit, $limit): array|false
+    public function filterProducts(array $filter, int $actualPageLimitInit, int $limit): array|false
     {
         if(empty($filter))
         {
@@ -80,12 +97,25 @@ class Database implements IDatabaseRepository
         }
         
         $whereFilters = $this->performWhereFilters($filter);
+        $result = false;
 
-        $stmt = $this->PDO->prepare("SELECT * FROM {$this->tablename} WHERE {$whereFilters} LIMIT {$actualPageLimitInit},{$limit}");
-        $stmt->execute();
+        if(is_null($this->campaign))
+        {
+            $stmt = $this->PDO->prepare("SELECT * FROM {$this->tablename} WHERE {$whereFilters} LIMIT {$actualPageLimitInit},{$limit}");
+            $stmt->execute();
+            
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
+        else
+        {
+            $campaignId = $this->getCampaignId();
+            
+            $stmt = $this->PDO->prepare("SELECT * FROM product LEFT JOIN product_campaign ON product.id = product_campaign.product_id WHERE product_campaign.campaign_id = {$campaignId} AND {$whereFilters} LIMIT {$actualPageLimitInit},{$limit}");
+            $stmt->execute();
+    
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        }
         
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
         return $result;
     }
 
@@ -188,14 +218,21 @@ class Database implements IDatabaseRepository
      * @param array $filters
      * @return mixed
      */
-    public function numberOfRows($filters): mixed
+    public function numberOfRows(?array $filters): mixed
     {
-        $stmt = "";
+        $stmt = false;
         
-        if(!empty($filters))
+        if(!empty($filters) && is_null($this->campaign))
         {
             $whereFilters = $this->performWhereFilters($filters);
             $stmt = $this->PDO->prepare("SELECT COUNT(*) FROM {$this->tablename} WHERE {$whereFilters}");
+        }
+        else if(!is_null($this->campaign))
+        {
+            $campaignId = $this->getCampaignId();
+            $whereFilters = $this->performWhereFilters($filters);
+            
+            $stmt = $this->PDO->prepare("SELECT COUNT(*) FROM product LEFT JOIN product_campaign ON product.id = product_campaign.product_id WHERE product_campaign.campaign_id = {$campaignId} AND {$whereFilters}");
         }
         else
         {
@@ -249,6 +286,21 @@ class Database implements IDatabaseRepository
     }
 
     /**
+     * Obtém o id da campanha solicitada
+     *
+     * @return mixed
+     */
+    private function getCampaignId(): mixed
+    {
+        $stmt = $this->PDO->prepare("SELECT campaign_id FROM campaign WHERE url='{$this->campaign}' OR campaign_name LIKE '%{$this->campaign}%';");
+        $stmt->execute();
+
+        $campaignId = $stmt->fetchColumn();
+
+        return $campaignId;
+    }
+
+    /**
      * Cria a regex responsável por encontrar os produtos pertencentes à categoria solicitada pois um produtos pode ter diversas categorias registradas
      *
      * @param string $columnName
@@ -258,5 +310,10 @@ class Database implements IDatabaseRepository
     private function createWhereRegex($columnName, $valuesToCreateRegex)
     {
         return "{$columnName} REGEXP '" . implode("|", explode(" ", $valuesToCreateRegex)) . "'";
+    }
+
+    public function __destruct()
+    {
+        $this->PDO = null;
     }
 }
