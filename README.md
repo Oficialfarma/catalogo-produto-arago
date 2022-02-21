@@ -30,14 +30,15 @@ Também será necessário criar as variáveis de ambiente para inicialização d
 
 Inicie o servidor PHP seguindo os passos do servidor utilizado ou, caso utilize o servidor embutido do PHP, basta rodar, no terminal, o comando `composer server` para que seja iniciado o servidor.
 
-Com o servidor iniciado já será possível acessar os produtos disponíveis na base através da rota /products. Os parâmetros permitidos pela rota são:
+Com o servidor iniciado já será possível acessar os produtos disponíveis na base através da rota /products/_:?campaign_. Os parâmetros permitidos pela rota são:
 
-- limit - Limite de itens retornados em cada página
-- page - página de exibição de produtos
-- name - nome do produto que está sendo buscado
-- discount - Faixa de desconto solicitada (Aceita mais de um valor separado pelo sinal de mais(+))
-- id - Id do produto buscado
-- price - Faixa de preço do produto (Aceita dois valores separados pelo sinal de adição(+)). Obs.: O valor não deve ser passado como um número inteiro sem possuir vírgulas ou pontos. Ex.: R$ 30,25 deve ser passado como 3025
+- campaing (opcional) - Nome da campanha solicitada, quando omitida retorna todos os produtos registrados na base. Deve ser passada como path e não query string.
+- limit (opcional) - Limite de itens retornados em cada página.
+- page (opcional) - página de exibição de produtos.
+- name (opcional) - nome do produto que está sendo buscado.
+- discount (opcional) - Faixa de desconto solicitada (Aceita mais de um valor separado pelo sinal de mais(+)).
+- id (opcional) - Id do produto buscado.
+- price (opcional) - Faixa de preço do produto (Aceita dois valores separados pelo sinal de adição(+)). Obs.: O valor não deve ser passado como um número inteiro sem possuir vírgulas ou pontos. Ex.: R$ 30,25 deve ser passado como 3025.
 
 ## Produtos
 
@@ -106,10 +107,11 @@ Ao solicitar a url /products?products?price=1+15900&limit=2, o retorno será com
   ],
   "pagination": {
     "totalProducts": 21,
-	"actualPage": 1,
-	"totalPages": 11,
-	"perPage": 2
-  }
+	  "actualPage": 1,
+	  "totalPages": 11,
+	  "perPage": 2
+  },
+  "campaign": "teste"
 }
 ```
 
