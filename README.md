@@ -80,29 +80,29 @@ Ao solicitar a url /products?products?price=1+15900&limit=2, o retorno será com
 ```json
 {
   "data": [
-	{
-        "id": "1",
-        "ean": "7898624342324",
-        "name": "Produto de teste 1",
-        "price": "119.00",
-        "price_not_formated": 11900,
-        "promotional_price": "107.00",
-        "promotional_price_not_formated": 10700,
-        "url": "https://www.url.com.br/produto-de-teste-500-ml",
-        "product_image": "https://static3.tcdn.com.br/img/",
-        "payment_option": "R$ 101,65 &agrave; vista com desconto"
+    {
+      "id": "1",
+      "ean": "7898624342324",
+      "name": "Produto de teste 1",
+      "price": "119.00",
+      "price_not_formated": 11900,
+      "promotional_price": "107.00",
+      "promotional_price_not_formated": 10700,
+      "url": "https://www.url.com.br/produto-de-teste-500-ml",
+      "product_image": "https://static3.tcdn.com.br/img/",
+      "payment_option": "R$ 101,65 &agrave; vista com desconto"
     },
     {
-        "id": "1",
-        "ean": "7898624342324",
-        "name": "Produto de teste 1",
-        "price": "119.00",
-        "price_not_formated": 11900,
-        "promotional_price": "107.00",
-        "promotional_price_not_formated": 10700,
-        "url": "https://www.url.com.br/produto-de-teste-500-ml",
-        "product_image": "https://static3.tcdn.com.br/img/",
-        "payment_option": "R$ 101,65 &agrave; vista com desconto"
+      "id": "1",
+      "ean": "7898624342324",
+      "name": "Produto de teste 1",
+      "price": "119.00",
+      "price_not_formated": 11900,
+      "promotional_price": "107.00",
+      "promotional_price_not_formated": 10700,
+      "url": "https://www.url.com.br/produto-de-teste-500-ml",
+      "product_image": "https://static3.tcdn.com.br/img/",
+      "payment_option": "R$ 101,65 &agrave; vista com desconto"
     }
   ],
   "pagination": {
