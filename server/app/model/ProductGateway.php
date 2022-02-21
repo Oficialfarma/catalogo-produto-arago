@@ -10,9 +10,9 @@ class ProductGateway implements IProductGateway
 {
     private $db;
 
-    public function __construct()
+    public function __construct(string|null $campaign)
     {
-        $this->db = new Database();
+        $this->db = new Database($campaign);
     }
 
     /**
@@ -22,7 +22,7 @@ class ProductGateway implements IProductGateway
      * @param int $page
      * @return array|false
      */
-    public function findAll($limit, $page): array|false
+    public function findAll(int $limit, int $page): array|false
     {
         $actualPageLimit = $this->getActualPageRange($limit, $page);
 
@@ -47,7 +47,7 @@ class ProductGateway implements IProductGateway
      * @param int   $page
      * @return array|false
      */
-    public function filterProductsByQueryString($filters, $limit, $page): array|false
+    public function filterProductsByQueryString(array $filters, int $limit, int $page): array|false
     {
         $actualPageLimit = $this->getActualPageRange($limit, $page);
 
@@ -69,7 +69,7 @@ class ProductGateway implements IProductGateway
      * @param array $filters
      * @return int
      */
-    public function getNumberOfRows($filters): int
+    public function getNumberOfRows(array $filters): int
     {
         $tableRows = $this->db->numberOfRows($filters);
 
@@ -83,7 +83,7 @@ class ProductGateway implements IProductGateway
      * @param array $filters
      * @return float
      */
-    public function totalPages($limit, $filters): float
+    public function totalPages(int $limit, array $filters): float
     {
         $rows = $this->getNumberOfRows($filters);
 
