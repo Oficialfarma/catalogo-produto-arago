@@ -13,7 +13,6 @@ use App\Utils\RegisterLog;
 class DownloadProducts implements IDownloadProducts
 {
     private $curl;
-    private $skus;
     private $amountProducts;
     private $products = array();
     private $limit;
@@ -21,7 +20,6 @@ class DownloadProducts implements IDownloadProducts
     
     function __construct()
     {
-        $this->skus = explode("\r\n", file_get_contents('skus.txt'));
         $this->curl = curl_init();
         $this->amountProducts = 0;
         $this->limit = 50;
