@@ -13,15 +13,16 @@ class ProductController
     private $filters = array();
     private $limit = 10;
     private $page = 1;
+    private $campaign;
 
-    public function __construct()
+    public function __construct(string|null $campaign)
     {
-        $this->model = new ProductGateway();
+        $this->campaign = $campaign;
+        $this->model = new ProductGateway($campaign);
     }
 
     /**
      * Faz a busca de todos os produtos
-     *
      * @return void
      */
     public function getAllProducts(): void
@@ -71,7 +72,7 @@ class ProductController
             $this->model->filterProductsByQueryString(
                 $this->filters,
                 $this->limit,
-                $this->page
+                $this->page,
             )
         );
     }
@@ -111,7 +112,6 @@ class ProductController
 
     /**
      * Obtém as informações sobre a paginação
-     *
      * @return array
      */
     public function paginationInfos(): array
@@ -148,7 +148,8 @@ class ProductController
     {
         $data = array(
             "data" => $data,
-            "pagination" => $this->paginationInfos()
+            "pagination" => $this->paginationInfos(),
+            "campaign" => $this->campaign ?? 'all products'
         );
         
         header("Content-Type: application/json");
