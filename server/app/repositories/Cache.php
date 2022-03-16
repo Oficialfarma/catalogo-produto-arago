@@ -75,7 +75,7 @@ class Cache implements ICacheRepository
         {
             $cache = json_decode(file_get_contents($this->getFilePath($filename, $folder), true), JSON_UNESCAPED_SLASHES | JSON_HEX_QUOT);
             
-            if($cache->{'expires'} < time())
+            if($cache['expires'] < time())
             {
                 $isValidCache = true;
             }
