@@ -1,3 +1,6 @@
+#database
+validation.php
+
 # local env files
 .env
 .env.local

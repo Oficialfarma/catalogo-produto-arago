@@ -14,7 +14,7 @@ class Database implements IDatabaseRepository
     private $tablename;
     private $campaign;
     
-    public function __construct(string|null $campaign)
+    public function __construct(string|null $campaign = null)
     {
         $host = $_ENV['HOST'];
         $database = $_ENV['DATABASE'];

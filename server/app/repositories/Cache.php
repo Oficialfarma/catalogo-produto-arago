@@ -89,7 +89,7 @@ class Cache implements ICacheRepository
                 }
             }
         }
-
+        
         return $isValidCache;
     }
 
